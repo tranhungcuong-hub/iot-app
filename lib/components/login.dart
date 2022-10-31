@@ -1,5 +1,5 @@
-// ignore_for_file: library_private_types_in_public_api, unnecessary_new, avoid_print
-
+// ignore_for_file: library_private_types_in_public_api, unnecessary_new, avoid_print, unrelated_type_equality_checks
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_app/components/register.dart';
@@ -25,6 +25,7 @@ class _MyLoginState extends State<MyLogin> {
     super.initState();
   }
 
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,115 +57,148 @@ class _MyLoginState extends State<MyLogin> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(left: 35, right: 35),
-                      child: Column(
-                        children: [
-                          TextField(
-                            style: const TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              fillColor: Colors.grey.shade100,
-                              filled: true,
-                              hintText: "Email",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              style: const TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                fillColor: Colors.grey.shade100,
+                                filled: true,
+                                hintText: "Email",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
+                              controller: emailInputController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please input email!';
+                                }
+                                if (!RegExp(
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(value)) {
+                                  return 'Please input correct email!';
+                                }
+                                return null;
+                              },
                             ),
-                            controller: emailInputController,
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          TextField(
-                            style: const TextStyle(),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              fillColor: Colors.grey.shade100,
-                              filled: true,
-                              hintText: "Password",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              style: const TextStyle(),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                fillColor: Colors.grey.shade100,
+                                filled: true,
+                                hintText: "Password",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
+                              controller: pwdInputController,
                             ),
-                            controller: pwdInputController,
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.grey,
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.grey,
+                                    backgroundColor: const Color(0xff4c505b),
+                                  ),
+                                  icon: const FaIcon(FontAwesomeIcons.google),
+                                  label: const Text('Log in with Google'),
+                                  onPressed: () async {
+                                    // try {
+                                    //   await signInWithGoogle();
+                                    //   Navigator.of(context).pushAndRemoveUntil(
+                                    //     new MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //           new MyHomePage(),
+                                    //     ),
+                                    //     (route) => false,
+                                    //   );
+                                    // } catch (e) {
+                                    //   if (e is FirebaseAuthException) {
+                                    //     showMessage(e.message!);
+                                    //   }
+                                    // }
+                                  },
+                                ),
+                                CircleAvatar(
+                                  radius: 30,
                                   backgroundColor: const Color(0xff4c505b),
-                                ),
-                                icon: const FaIcon(FontAwesomeIcons.google),
-                                label: const Text('Log in with Google'),
-                                onPressed: () {},
-                              ),
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor: const Color(0xff4c505b),
-                                child: IconButton(
-                                    color: Colors.white,
-                                    onPressed: () async {
-                                      bool flag = await signin(
-                                        emailInputController.text,
-                                        pwdInputController.text,
-                                      );
-                                      if (flag) {
-                                        Navigator.of(context)
-                                            .pushAndRemoveUntil(
-                                          new MaterialPageRoute(
-                                            builder: (context) =>
-                                                new MyHomePage(),
-                                          ),
-                                          (route) => false,
+                                  child: IconButton(
+                                      color: Colors.white,
+                                      onPressed: () async {
+                                        bool flag = await signin(
+                                          emailInputController.text,
+                                          pwdInputController.text,
                                         );
-                                      }
-                                    },
-                                    icon: const Icon(
-                                      Icons.arrow_forward,
-                                    )),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                    new MaterialPageRoute(
-                                        builder: (context) => new MyRegister()),
-                                    (route) => false,
-                                  );
-                                },
-                                style: const ButtonStyle(),
-                                child: const Text(
-                                  'Sign Up',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: Color(0xff4c505b),
-                                      fontSize: 18),
-                                ),
-                              ),
-                              TextButton(
-                                  onPressed: () {},
+                                        if (flag) {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            Navigator.of(context)
+                                                .pushAndRemoveUntil(
+                                              new MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const MyHomePage(),
+                                              ),
+                                              (route) => false,
+                                            );
+                                          }
+                                        }
+                                      },
+                                      icon: const Icon(
+                                        Icons.arrow_forward,
+                                      )),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      new MaterialPageRoute(
+                                          builder: (context) =>
+                                              const MyRegister()),
+                                      (route) => false,
+                                    );
+                                  },
+                                  style: const ButtonStyle(),
                                   child: const Text(
-                                    'Forgot Password',
+                                    'Sign Up',
+                                    textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: Color(0xff4c505b),
-                                      fontSize: 18,
-                                    ),
-                                  )),
-                            ],
-                          )
-                        ],
+                                        decoration: TextDecoration.underline,
+                                        color: Color(0xff4c505b),
+                                        fontSize: 18),
+                                  ),
+                                ),
+                                TextButton(
+                                    onPressed: () {},
+                                    child: const Text(
+                                      'Forgot Password',
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Color(0xff4c505b),
+                                        fontSize: 18,
+                                      ),
+                                    )),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -180,5 +214,25 @@ class _MyLoginState extends State<MyLogin> {
   void showInfo() {
     print(emailInputController.text);
     print(pwdInputController.text);
+  }
+
+  void showMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              child: const Text("Ok"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 }
