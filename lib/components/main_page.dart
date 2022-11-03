@@ -1,10 +1,9 @@
 // ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
 
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/components/weather.dart';
+import 'package:intl/intl.dart';
 
 class MyMainPage extends StatefulWidget {
   const MyMainPage({super.key});
@@ -16,6 +15,8 @@ class MyMainPage extends StatefulWidget {
 class _MyMainPageState extends State<MyMainPage> {
   final user = FirebaseAuth.instance.currentUser;
   var size, width;
+
+  String currentDate = DateFormat('EEEE, dd MMMM').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +60,28 @@ class _MyMainPageState extends State<MyMainPage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: const <Widget>[
-            SizedBox(
-              height: 40,
+          children: <Widget>[
+            const Text(
+              'Ho Chi Minh',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30.0,
+              ),
             ),
-            MyWeather(),
-            MyWeather(),
-            MyWeather(),
-            MyWeather(),
+            Text(
+              currentDate,
+              style: const TextStyle(
+                color: Color.fromARGB(255, 102, 102, 102),
+                fontSize: 16.0,
+              ),
+            ),
+            const SizedBox(
+              height: 60,
+            ),
+            const MyWeather(),
+            const MyWeather(),
+            const MyWeather(),
+            const MyWeather(),
           ],
         ),
       ),
