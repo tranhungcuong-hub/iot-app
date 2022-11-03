@@ -1,23 +1,21 @@
 // ignore_for_file: avoid_print, curly_braces_in_flow_control_structures, unused_local_variable
 
-import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-Future<bool> signin(String email, String password) async {
+Future<String> signin(String email, String password) async {
   try {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
     print("success");
-    return true;
+    return '';
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
-      print('No user found for that email.');
+      return 'No user found for that email.';
     } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
+      return 'Wrong password provided for that user.';
     }
   }
-  return false;
+  return '';
 }
 
 Future signup(
