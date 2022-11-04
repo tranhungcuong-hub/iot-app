@@ -18,10 +18,13 @@ class _MyMainPageState extends State<MyMainPage> {
 
   String currentDate = DateFormat('EEEE, dd MMMM').format(DateTime.now());
 
+  String location = 'Ho Chi Minh';
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
     width = size.width;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -78,10 +81,7 @@ class _MyMainPageState extends State<MyMainPage> {
             const SizedBox(
               height: 60,
             ),
-            const MyWeather(),
-            const MyWeather(),
-            const MyWeather(),
-            const MyWeather(),
+            MyWeather(location: location),
           ],
         ),
       ),
