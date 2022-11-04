@@ -52,7 +52,7 @@ class _MyWeatherState extends State<MyWeather> {
 
     return Container(
       width: width,
-      height: 200,
+      height: 170,
       margin: const EdgeInsets.only(bottom: 50, top: 0, left: 10, right: 10),
       // padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
