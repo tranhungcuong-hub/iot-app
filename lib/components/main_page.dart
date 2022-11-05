@@ -2,7 +2,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app/components/weather.dart';
+import 'package:my_app/figure/humidity.dart';
+import 'package:my_app/figure/light.dart';
+import 'package:my_app/figure/temp.dart';
+import 'package:my_app/figure/weather.dart';
 import 'package:intl/intl.dart';
 
 class MyMainPage extends StatefulWidget {
@@ -82,6 +85,9 @@ class _MyMainPageState extends State<MyMainPage> {
               height: 60,
             ),
             MyWeather(location: location),
+            const MyHumidityView(),
+            const MyLightView(),
+            const MyTempView(),
           ],
         ),
       ),
