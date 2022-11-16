@@ -130,13 +130,11 @@ class _MyLoginState extends State<MyLogin> {
                                             pwdInputController.text,
                                           );
                                           if (str == '') {
-                                            Navigator.of(context)
-                                                .pushAndRemoveUntil(
+                                            Navigator.of(context).push(
                                               new MaterialPageRoute(
                                                 builder: (context) =>
                                                     new MyHomePage(),
                                               ),
-                                              (route) => false,
                                             );
                                           } else {
                                             showDialog(
