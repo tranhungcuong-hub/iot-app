@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:my_app/detail/lightChart.dart';
 
 //Create a shader linear gradient
 final Shader linearGradient = const LinearGradient(
@@ -23,18 +24,20 @@ class MyLightView extends StatefulWidget {
 class _MyLightViewState extends State<MyLightView> {
   final Color secondaryColor = const Color(0xff90B2F8);
   var size, width;
-  late List<dynamic> humidityData;
+  late List<dynamic> lightData;
   bool isLoadingEnded = false;
+
+  late List<dynamic> day;
 
   Future _fetchData() async {
     final response = await http.get(Uri.parse(
         'https://io.adafruit.com/api/v2/trungbui2405/feeds/dadn.cambien-anhsang/data'));
     List<dynamic> data = json.decode(response.body);
-    print(data[0]['value']);
-    // String datetime = data[8][0];
+    day = getData(data);
+    print(day);
     isLoadingEnded = true;
     setState(() {
-      humidityData = data;
+      lightData = data;
     });
   }
 
@@ -70,7 +73,7 @@ class _MyLightViewState extends State<MyLightView> {
               clipBehavior: Clip.none,
               children: [
                 const Positioned(
-                  bottom: 30,
+                  top: 30,
                   left: 20,
                   child: Text(
                     'Light',
@@ -82,20 +85,53 @@ class _MyLightViewState extends State<MyLightView> {
                   ),
                 ),
                 Positioned(
+                  bottom: 30,
+                  left: 20,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(
+                        fontSize: 20,
+                      ),
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyLightChart(
+                            data: day,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Detail',
+                    ),
+                  ),
+                ),
+                Positioned(
                   top: 20,
-                  right: 50,
+                  right: 20,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
-                          humidityData[0]['value'].toString(),
+                          lightData[0]['value'].toString(),
                           style: TextStyle(
                             fontSize: 80,
                             fontWeight: FontWeight.bold,
                             foreground: Paint()..shader = linearGradient,
                           ),
+                        ),
+                      ),
+                      Text(
+                        '%',
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          foreground: Paint()..shader = linearGradient,
                         ),
                       ),
                     ],
@@ -107,5 +143,20 @@ class _MyLightViewState extends State<MyLightView> {
               child: CircularProgressIndicator(),
             ),
     );
+  }
+
+  List<dynamic> getData(List<dynamic> data) {
+    List<dynamic> figures = [];
+
+    var n = data.length > 7 ? 7 : data.length;
+
+    for (var i = 0; i < n; i++) {
+      figures.add([
+        data[i]['created_at'].toString().substring(0, 10),
+        data[i]['value'].toString(),
+      ]);
+    }
+
+    return figures;
   }
 }
