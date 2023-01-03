@@ -34,7 +34,7 @@ class _MyHumidityViewState extends State<MyHumidityView> {
         'https://io.adafruit.com/api/v2/trungbui2405/feeds/dadn.cambien-doamdat/data'));
     List<dynamic> data = json.decode(response.body);
     day = getData(data);
-    print(day);
+    // print(day);
     // String datetime = data[8][0];
     isLoadingEnded = true;
     setState(() {

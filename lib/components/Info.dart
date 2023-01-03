@@ -26,10 +26,8 @@ class _InfomationPageState extends State<InfomationPage> {
         children: <Widget>[
           Container(
             decoration: const BoxDecoration(
-                gradient: LinearGradient(colors: [
-              Color(0xFF26CBE6),
-              Color(0xFF26CBC0),
-            ], begin: Alignment.topCenter, end: Alignment.center)),
+              color: Color(0xff90B2F8),
+            ),
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
@@ -73,26 +71,6 @@ class _InfomationPageState extends State<InfomationPage> {
                         top: height / 2.6, left: width / 20, right: width / 20),
                     child: Column(
                       children: <Widget>[
-                        // Container(
-                        //   decoration: const BoxDecoration(
-                        //       color: Colors.white,
-                        //       boxShadow: [
-                        //         BoxShadow(
-                        //             color: Colors.black45,
-                        //             blurRadius: 2.0,
-                        //             offset: Offset(0.0, 2.0))
-                        //       ]),
-                        //   child: Padding(
-                        //     padding: EdgeInsets.all(width / 20),
-                        //     child: Row(
-                        //         mainAxisAlignment: MainAxisAlignment.center,
-                        //         children: <Widget>[
-                        //           headerChild('Photos', 114),
-                        //           headerChild('Followers', 1205),
-                        //           headerChild('Following', 360),
-                        //         ]),
-                        //   ),
-                        // ),
                         Padding(
                           padding: EdgeInsets.only(top: height / 20),
                           child: Column(
@@ -104,7 +82,7 @@ class _InfomationPageState extends State<InfomationPage> {
                                 style: ElevatedButton.styleFrom(
                                   textStyle: const TextStyle(fontSize: 20),
                                   foregroundColor: Colors.white,
-                                  backgroundColor: const Color(0xFF26CBE6),
+                                  backgroundColor: const Color(0xff90B2F8),
                                 ),
                                 onPressed: () {
                                   signout();
@@ -148,7 +126,7 @@ class _InfomationPageState extends State<InfomationPage> {
             '$value',
             style: const TextStyle(
                 fontSize: 14.0,
-                color: Color(0xFF26CBE6),
+                color: Color(0xff90B2F8),
                 fontWeight: FontWeight.bold),
           )
         ],
@@ -164,7 +142,7 @@ class _InfomationPageState extends State<InfomationPage> {
               ),
               Icon(
                 icon,
-                color: const Color(0xFF26CBE6),
+                color: const Color(0xff90B2F8),
                 size: 36.0,
               ),
               SizedBox(

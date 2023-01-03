@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:my_app/components/control_button.dart';
 
 import '../components/main_page.dart';
 import '../components/Info.dart';
@@ -15,6 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
   List<Widget> body = const [
     MyMainPage(),
+    ControlSignalPage(),
     InfomationPage(),
   ];
 
@@ -36,6 +38,10 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             label: 'Home',
             icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: 'Control',
+            icon: Icon(Icons.signal_cellular_0_bar),
           ),
           BottomNavigationBarItem(
             label: 'Information',

@@ -32,7 +32,7 @@ class _MyWeatherState extends State<MyWeather> {
   Future _fetchData(location) async {
     final response = await http.get(Uri.parse(weatherApiUrl(location)));
     Map<String, dynamic> data = json.decode(response.body);
-    print(data['days'][0]['preciptype'][0]);
+    // print(data['days'][0]['preciptype'][0]);
     // String datetime = data[8][0];
     isLoadingEnded = true;
     setState(() {

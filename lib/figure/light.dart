@@ -34,7 +34,7 @@ class _MyLightViewState extends State<MyLightView> {
         'https://io.adafruit.com/api/v2/trungbui2405/feeds/dadn.cambien-anhsang/data'));
     List<dynamic> data = json.decode(response.body);
     day = getData(data);
-    print(day);
+    // print(day);
     isLoadingEnded = true;
     setState(() {
       lightData = data;
